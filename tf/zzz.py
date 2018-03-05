@@ -165,13 +165,13 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.register("type", "bool", lambda v: v.lower() == "true")
   parser.add_argument(
-      "--train_data", type=str, default="C:\\Users\\DominikSchmitt\\Desktop\\studienarbeit\\tf\\train\\a.csv", help="Path to the training data.")
+      "--train_data", type=str, default="C:\\Users\\DominikSchmitt\\Desktop\\studienarbeit_playground\\tf\\train\\a.csv", help="Path to the training data.")
   parser.add_argument(
-      "--test_data", type=str, default="C:\\Users\\DominikSchmitt\\Desktop\\studienarbeit\\tf\\test\\a.csv", help="Path to the test data.")
+      "--test_data", type=str, default="C:\\Users\\DominikSchmitt\\Desktop\\studienarbeit_playground\\tf\\test\\a.csv", help="Path to the test data.")
   parser.add_argument(
       "--predict_data",
       type=str,
-      default="C:\\Users\\DominikSchmitt\\Desktop\\studienarbeit\\tf\\prediction\\a.csv",
+      default="C:\\Users\\DominikSchmitt\\Desktop\\studienarbeit_playground\\tf\\prediction\\a.csv",
       help="Path to the prediction data.")
   FLAGS, unparsed = parser.parse_known_args()
   tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
