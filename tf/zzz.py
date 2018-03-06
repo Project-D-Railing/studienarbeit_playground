@@ -109,15 +109,15 @@ def main(unused_argv):
 
   # Training examples
   training_set = tf.contrib.learn.datasets.base.load_csv_without_header(
-      filename=abalone_train, target_dtype=np.int, features_dtype=np.float64)
+      filename=abalone_train, target_dtype=np.str, features_dtype=np.str)
 
   # Test examples
   test_set = tf.contrib.learn.datasets.base.load_csv_without_header(
-      filename=abalone_test, target_dtype=np.int, features_dtype=np.float64)
+      filename=abalone_test, target_dtype=np.str, features_dtype=np.str)
 
   # Set of 7 examples for which to predict abalone ages
   prediction_set = tf.contrib.learn.datasets.base.load_csv_without_header(
-      filename=abalone_predict, target_dtype=np.int, features_dtype=np.float64)
+      filename=abalone_predict, target_dtype=np.str, features_dtype=np.str)
   #logging
   tf.logging.set_verbosity(tf.logging.INFO)
 
