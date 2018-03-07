@@ -912,22 +912,22 @@ node {
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
+        type: DT_INT32
+        type: DT_STRING
+        type: DT_STRING
+        type: DT_INT32
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
+        type: DT_INT32
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
+        type: DT_BOOL
       }
     }
   }
@@ -1043,7 +1043,7 @@ node {
     key: "f"
     value {
       func {
-        name: "tf_map_func_b46ffb8e"
+        name: "tf_map_func_3b0031ec"
       }
     }
   }
@@ -1102,22 +1102,22 @@ node {
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
+        type: DT_INT32
+        type: DT_STRING
+        type: DT_STRING
+        type: DT_INT32
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
+        type: DT_INT32
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
+        type: DT_BOOL
       }
     }
   }
@@ -1199,22 +1199,22 @@ node {
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
+        type: DT_INT32
+        type: DT_STRING
+        type: DT_STRING
+        type: DT_INT32
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
+        type: DT_INT32
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
+        type: DT_BOOL
       }
     }
   }
@@ -1356,22 +1356,22 @@ node {
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
+        type: DT_INT32
+        type: DT_STRING
+        type: DT_STRING
+        type: DT_INT32
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
+        type: DT_INT32
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
+        type: DT_BOOL
       }
     }
   }
@@ -1630,22 +1630,22 @@ node {
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
+        type: DT_INT32
+        type: DT_STRING
+        type: DT_STRING
+        type: DT_INT32
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
+        type: DT_INT32
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
         type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
-        type: DT_STRING
+        type: DT_BOOL
       }
     }
   }
@@ -1688,7 +1688,7 @@ node {
   attr {
     key: "T"
     value {
-      type: DT_STRING
+      type: DT_INT32
     }
   }
   attr {
@@ -1726,7 +1726,7 @@ node {
   attr {
     key: "SrcT"
     value {
-      type: DT_STRING
+      type: DT_INT32
     }
   }
   attr {
@@ -2078,7 +2078,7 @@ node {
   attr {
     key: "T"
     value {
-      type: DT_STRING
+      type: DT_INT32
     }
   }
   attr {
@@ -2116,7 +2116,7 @@ node {
   attr {
     key: "SrcT"
     value {
-      type: DT_STRING
+      type: DT_INT32
     }
   }
   attr {
@@ -18096,7 +18096,7 @@ node {
   attr {
     key: "T"
     value {
-      type: DT_STRING
+      type: DT_INT32
     }
   }
   attr {
@@ -18134,7 +18134,7 @@ node {
   attr {
     key: "SrcT"
     value {
-      type: DT_STRING
+      type: DT_INT32
     }
   }
   attr {
@@ -23945,7 +23945,7 @@ node {
   attr {
     key: "T"
     value {
-      type: DT_STRING
+      type: DT_INT32
     }
   }
   attr {
@@ -23983,7 +23983,7 @@ node {
   attr {
     key: "SrcT"
     value {
-      type: DT_STRING
+      type: DT_INT32
     }
   }
   attr {
@@ -37492,7 +37492,7 @@ node {
   attr {
     key: "T"
     value {
-      type: DT_STRING
+      type: DT_INT32
     }
   }
   attr {
@@ -37530,7 +37530,7 @@ node {
   attr {
     key: "SrcT"
     value {
-      type: DT_STRING
+      type: DT_INT32
     }
   }
   attr {
@@ -54685,7 +54685,7 @@ node {
   attr {
     key: "T"
     value {
-      type: DT_STRING
+      type: DT_BOOL
     }
   }
   attr {
@@ -54717,7 +54717,7 @@ node {
   attr {
     key: "T"
     value {
-      type: DT_STRING
+      type: DT_BOOL
     }
   }
   attr {
@@ -54805,7 +54805,7 @@ node {
   attr {
     key: "T"
     value {
-      type: DT_STRING
+      type: DT_BOOL
     }
   }
   attr {
@@ -55360,7 +55360,7 @@ node {
   attr {
     key: "T"
     value {
-      type: DT_STRING
+      type: DT_BOOL
     }
   }
   attr {
@@ -55392,7 +55392,7 @@ node {
   attr {
     key: "SrcT"
     value {
-      type: DT_STRING
+      type: DT_BOOL
     }
   }
   attr {
@@ -105415,7 +105415,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
         }
-        string_val: "_temp_9c1f58bb7ddb42e28216ec1cb9b9fb5b/part"
+        string_val: "_temp_572f8bde8514427cb2156e9264ab81a8/part"
       }
     }
   }
@@ -110835,7 +110835,7 @@ node {
 library {
   function {
     signature {
-      name: "tf_map_func_b46ffb8e"
+      name: "tf_map_func_3b0031ec"
       input_arg {
         name: "arg0"
         type: DT_STRING
@@ -110858,7 +110858,7 @@ library {
       }
       output_arg {
         name: "DecodeCSV_o9"
-        type: DT_STRING
+        type: DT_INT32
       }
       output_arg {
         name: "DecodeCSV_o15"
@@ -110870,7 +110870,7 @@ library {
       }
       output_arg {
         name: "DecodeCSV"
-        type: DT_STRING
+        type: DT_INT32
       }
       output_arg {
         name: "DecodeCSV_o8"
@@ -110894,7 +110894,7 @@ library {
       }
       output_arg {
         name: "DecodeCSV_o6"
-        type: DT_STRING
+        type: DT_INT32
       }
       output_arg {
         name: "DecodeCSV_o7"
@@ -110917,8 +110917,8 @@ library {
         type: DT_STRING
       }
       output_arg {
-        name: "DecodeCSV_o10"
-        type: DT_STRING
+        name: "Equal"
+        type: DT_BOOL
       }
       description: "A wrapper for Defun that facilitates shape inference."
     }
@@ -110928,20 +110928,20 @@ library {
       attr {
         key: "dtype"
         value {
-          type: DT_STRING
+          type: DT_INT32
         }
       }
       attr {
         key: "value"
         value {
           tensor {
-            dtype: DT_STRING
+            dtype: DT_INT32
             tensor_shape {
               dim {
                 size: 1
               }
             }
-            string_val: ""
+            int_val: 0
           }
         }
       }
@@ -111072,20 +111072,20 @@ library {
       attr {
         key: "dtype"
         value {
-          type: DT_STRING
+          type: DT_INT32
         }
       }
       attr {
         key: "value"
         value {
           tensor {
-            dtype: DT_STRING
+            dtype: DT_INT32
             tensor_shape {
               dim {
                 size: 1
               }
             }
-            string_val: ""
+            int_val: 0
           }
         }
       }
@@ -111144,20 +111144,20 @@ library {
       attr {
         key: "dtype"
         value {
-          type: DT_STRING
+          type: DT_INT32
         }
       }
       attr {
         key: "value"
         value {
           tensor {
-            dtype: DT_STRING
+            dtype: DT_INT32
             tensor_shape {
               dim {
                 size: 1
               }
             }
-            string_val: ""
+            int_val: 0
           }
         }
       }
@@ -111430,16 +111430,16 @@ library {
         key: "OUT_TYPE"
         value {
           list {
+            type: DT_INT32
             type: DT_STRING
             type: DT_STRING
             type: DT_STRING
             type: DT_STRING
             type: DT_STRING
+            type: DT_INT32
             type: DT_STRING
             type: DT_STRING
-            type: DT_STRING
-            type: DT_STRING
-            type: DT_STRING
+            type: DT_INT32
             type: DT_STRING
             type: DT_STRING
             type: DT_STRING
@@ -111472,6 +111472,39 @@ library {
         }
       }
     }
+    node_def {
+      name: "Equal/y"
+      op: "Const"
+      attr {
+        key: "dtype"
+        value {
+          type: DT_STRING
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_STRING
+            tensor_shape {
+            }
+            string_val: "14:00:00"
+          }
+        }
+      }
+    }
+    node_def {
+      name: "Equal"
+      op: "Equal"
+      input: "DecodeCSV:output:10"
+      input: "Equal/y:output:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_STRING
+        }
+      }
+    }
     ret {
       key: "DecodeCSV"
       value: "DecodeCSV:output:0"
@@ -111479,10 +111512,6 @@ library {
     ret {
       key: "DecodeCSV_o1"
       value: "DecodeCSV:output:1"
-    }
-    ret {
-      key: "DecodeCSV_o10"
-      value: "DecodeCSV:output:10"
     }
     ret {
       key: "DecodeCSV_o11"
@@ -111551,6 +111580,10 @@ library {
     ret {
       key: "DecodeCSV_o9"
       value: "DecodeCSV:output:9"
+    }
+    ret {
+      key: "Equal"
+      value: "Equal:z:0"
     }
   }
 }

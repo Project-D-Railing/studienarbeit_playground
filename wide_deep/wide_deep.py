@@ -27,7 +27,7 @@ _CSV_COLUMNS = [
     "id", "zugid", "zugverkehrstyp", "zugtyp", "zugowner", "zugklasse", "zugnummer", "zugnummerfull", "linie", "evanr", "arzeitsoll", "arzeitist", "dpzeitsoll", "dpzeitist", "gleissoll", "gleisist", "datum", "streckengeplanthash", "streckenchangedhash", "zugstatus"
 ]
 
-_CSV_COLUMN_DEFAULTS = [[""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]]
+_CSV_COLUMN_DEFAULTS = [[0], [""], [""], [""], [""], [""], [0], [""], [""], [0], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]]
 
 parser = argparse.ArgumentParser()
 
@@ -140,8 +140,8 @@ def build_estimator(model_dir, model_type):
 
   # Create a tf.estimator.RunConfig to ensure the model is run on CPU, which
   # trains faster than GPU for this model.
-  run_config = tf.estimator.RunConfig().replace(
-      session_config=tf.ConfigProto(device_count={'GPU': 0}))
+  run_config = tf.estimator.RunConfig() #.replace(
+  #    session_config=tf.ConfigProto(device_count={'GPU': 0}))
 
   if model_type == 'wide':
     return tf.estimator.LinearClassifier(
@@ -174,7 +174,7 @@ def input_fn(data_file, num_epochs, shuffle, batch_size):
     columns = tf.decode_csv(value, record_defaults=_CSV_COLUMN_DEFAULTS)
     features = dict(zip(_CSV_COLUMNS, columns))
     labels = features.pop('arzeitsoll')
-    return features, labels
+    return features, tf.equal(labels, '14:00:00')
 
   # Extract lines from input files using the Dataset API.
   dataset = tf.data.TextLineDataset(data_file)
@@ -195,7 +195,7 @@ def main(unused_argv):
   # Clean up the model directory if present
   shutil.rmtree(FLAGS.model_dir, ignore_errors=True)
   model = build_estimator(FLAGS.model_dir, FLAGS.model_type)
-
+  print("Model done.")
   # Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
   for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
     model.train(input_fn=lambda: input_fn(
@@ -211,10 +211,12 @@ def main(unused_argv):
     for key in sorted(results):
       print('%s: %s' % (key, results[key]))
 
+  
+
 
 if __name__ == '__main__':
   print(tf.__version__)
-  print(dir(tf.feature_column))
+ # print(dir(tf.feature_column))
   tf.logging.set_verbosity(tf.logging.INFO)
   FLAGS, unparsed = parser.parse_known_args()
   tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)

@@ -1,4 +1,3 @@
-id,zugid,zugverkehrstyp,zugtyp,zugowner,zugklasse,zugnummer,zugnummerfull,linie,evanr,arzeitsoll,arzeitist,dpzeitsoll,dpzeitist,gleissoll,gleisist,datum,streckengeplanthash,streckenchangedhash,zugstatus
 4092183,-1537277940184953680-1712081413-19,D,p,X1,erx,83723,erx83723,RB38,8000152,16:08:00,16:09:00,NULL,NULL,1,1,2017-12-08,7d951d1f,bd84c25a,n
 4092184,-4934150369195885435-1712081239-22,N,p,02,RE,4423,RE4423,1,8000152,16:38:00,16:43:00,NULL,NULL,9,9,2017-12-08,8566cc94,bd84c25a,n
 4092185,-7735609104301658583-1712081534-16,S,p,02,S,34180,S34180,1,8000152,16:25:00,16:26:00,NULL,NULL,2,2,2017-12-08,f092ca0b,bd84c25a,n
