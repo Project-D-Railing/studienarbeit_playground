@@ -67,13 +67,13 @@ def build_model_columns():
   """Builds a set of wide and deep feature columns."""
   # Continuous columns
   id = tf.feature_column.numeric_column('id')
-  zugid = tf.feature_column.categorical_column_with_hash_bucket('zugid', hash_bucket_size=1000000000)
+ # zugid = tf.feature_column.categorical_column_with_hash_bucket('zugid', hash_bucket_size=1000000000)
   zugverkehrstyp = tf.feature_column.categorical_column_with_vocabulary_list('zugverkehrstyp', ['D', 'N', 'S', 'F' , 'NULL'])
   zugtyp = tf.feature_column.categorical_column_with_vocabulary_list('zugtyp', ['p', 'NULL'])
   zugowner = tf.feature_column.categorical_column_with_hash_bucket('zugowner', hash_bucket_size=1000)
   zugklasse = tf.feature_column.categorical_column_with_hash_bucket('zugklasse', hash_bucket_size=1000)
   zugnummer = tf.feature_column.numeric_column('zugnummer')
-  zugnummerfull = tf.feature_column.categorical_column_with_hash_bucket('zugnummerfull', hash_bucket_size=10000000)
+ # zugnummerfull = tf.feature_column.categorical_column_with_hash_bucket('zugnummerfull', hash_bucket_size=10000000)
   linie = tf.feature_column.categorical_column_with_hash_bucket('linie', hash_bucket_size=1000)
   evanr = tf.feature_column.numeric_column('evanr')
  # arzeitsoll = tf.feature_column.categorical_column_with_hash_bucket('arzeitsoll', hash_bucket_size=2000)
@@ -83,8 +83,8 @@ def build_model_columns():
   gleissoll = tf.feature_column.categorical_column_with_hash_bucket('gleissoll', hash_bucket_size=2000)
   gleisist = tf.feature_column.categorical_column_with_hash_bucket('gleisist', hash_bucket_size=2000)
   datum = tf.feature_column.categorical_column_with_hash_bucket('datum', hash_bucket_size=2000)
-  streckengeplanthash = tf.feature_column.categorical_column_with_hash_bucket('streckengeplanthash', hash_bucket_size=2000000)
-  streckenchangedhash = tf.feature_column.categorical_column_with_hash_bucket('streckenchangedhash', hash_bucket_size=2000000)
+ # streckengeplanthash = tf.feature_column.categorical_column_with_hash_bucket('streckengeplanthash', hash_bucket_size=2000000)
+ # streckenchangedhash = tf.feature_column.categorical_column_with_hash_bucket('streckenchangedhash', hash_bucket_size=2000000)
   zugstatus = tf.feature_column.categorical_column_with_vocabulary_list('zugstatus', ['n', 'c', 'p'])
 
 
@@ -95,13 +95,13 @@ def build_model_columns():
   # Wide columns and deep columns.
   base_columns = [
       id,
-      zugid,
+  #    zugid,
       zugverkehrstyp,
       zugtyp,
       zugowner,
       zugklasse,
       zugnummer,
-      zugnummerfull,
+  #    zugnummerfull,
       linie,
       evanr,
     #  arzeitsoll,
@@ -111,8 +111,8 @@ def build_model_columns():
       gleissoll,
       gleisist,
       datum,
-      streckengeplanthash,
-      streckenchangedhash,
+   #   streckengeplanthash,
+  #    streckenchangedhash,
       zugstatus
   ]
 
@@ -126,8 +126,8 @@ def build_model_columns():
   wide_columns = base_columns # + crossed_columns
 
   deep_columns = [
-      id,
-      zugnummer
+  #    id,
+  #    zugnummer
       ]
 
   return wide_columns, deep_columns
