@@ -40,14 +40,14 @@ parser.add_argument(
     help="Valid model types: {'wide', 'deep', 'wide_deep'}.")
 
 parser.add_argument(
-    '--train_epochs', type=int, default=40, help='Number of training epochs.')
+    '--train_epochs', type=int, default=400, help='Number of training epochs.')
 
 parser.add_argument(
-    '--epochs_per_eval', type=int, default=2,
+    '--epochs_per_eval', type=int, default=100,
     help='The number of training epochs to run between evaluations.')
 
 parser.add_argument(
-    '--batch_size', type=int, default=40, help='Number of examples per batch.')
+    '--batch_size', type=int, default=1000, help='Number of examples per batch.')
 
 parser.add_argument(
     '--train_data', type=str, default='C:\\Users\\DominikSchmitt\\Desktop\\studienarbeit_playground\\wide_deep\\zuege2_newraw_train.csv',
@@ -58,8 +58,8 @@ parser.add_argument(
     help='Path to the test data.')
 
 _NUM_EXAMPLES = {
-    'train': 2561,
-    'validation': 181,
+    'train': 8000,
+    'validation': 1000,
 }
 
 
@@ -77,7 +77,7 @@ def build_model_columns():
   linie = tf.feature_column.categorical_column_with_hash_bucket('linie', hash_bucket_size=1000)
   evanr = tf.feature_column.numeric_column('evanr')
  # arzeitsoll = tf.feature_column.categorical_column_with_hash_bucket('arzeitsoll', hash_bucket_size=2000)
-  arzeitist = tf.feature_column.categorical_column_with_hash_bucket('arzeitist', hash_bucket_size=2000)
+ # arzeitist = tf.feature_column.categorical_column_with_hash_bucket('arzeitist', hash_bucket_size=2000)
   dpzeitsoll = tf.feature_column.categorical_column_with_hash_bucket('dpzeitsoll', hash_bucket_size=2000)
   dpzeitist = tf.feature_column.categorical_column_with_hash_bucket('dpzeitist', hash_bucket_size=2000)
   gleissoll = tf.feature_column.categorical_column_with_hash_bucket('gleissoll', hash_bucket_size=2000)
@@ -104,8 +104,8 @@ def build_model_columns():
   #    zugnummerfull,
       linie,
       evanr,
-    #  arzeitsoll,
-      arzeitist,
+  #   arzeitsoll,
+  #    arzeitist,
       dpzeitsoll,
       dpzeitist,
       gleissoll,
@@ -173,8 +173,11 @@ def input_fn(data_file, num_epochs, shuffle, batch_size):
     print('Parsing', data_file)
     columns = tf.decode_csv(value, record_defaults=_CSV_COLUMN_DEFAULTS)
     features = dict(zip(_CSV_COLUMNS, columns))
-    labels = features.pop('arzeitsoll')
-    return features, tf.equal(labels, '14:00:00')
+    labels = features.pop('arzeitist')
+    #print(labels)
+    #exit()
+    labels = tf.equal(labels, features.pop('arzeitsoll'))
+    return features, labels
 
   # Extract lines from input files using the Dataset API.
   dataset = tf.data.TextLineDataset(data_file)
