@@ -1,6 +1,13 @@
 # studienarbeit_playground
 Hier können Dinge vorab versioniert werden, welche eventuell später umgeordnet werden.
 
+# ACHTUNG
+
+## Wir nutzen Python 3.5.2 (+) und Tensorflow "tensorflow-1.6.0" 
+
+Die Pfadangaben müssen dem Nutzer angepasst werden, eventuell diese auslagern und dann mit gitignore erhalten lassen.
+
+
 # Howto Install TF mit GPU support
 
 * Als erstes am besten Anaconda downloaden

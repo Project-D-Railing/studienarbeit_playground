@@ -32,7 +32,7 @@ _CSV_COLUMN_DEFAULTS = [[0], [""], [""], [""], [""], [""], [0], [""], [""], [0],
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
-    '--model_dir', type=str, default='C:\\Users\\DominikSchmitt\\Desktop\\studienarbeit_playground\\wide_deep\\model',
+    '--model_dir', type=str, default='/home/dominikschmitt/Dokumente/Github/studienarbeit_playground/wide_deep/model',
     help='Base directory for the model.')
 
 parser.add_argument(
@@ -50,11 +50,11 @@ parser.add_argument(
     '--batch_size', type=int, default=1000, help='Number of examples per batch.')
 
 parser.add_argument(
-    '--train_data', type=str, default='C:\\Users\\DominikSchmitt\\Desktop\\studienarbeit_playground\\wide_deep\\zuege2_newraw_train.csv',
+    '--train_data', type=str, default='/home/dominikschmitt/Dokumente/Github/studienarbeit_playground/wide_deep/zuege2_newraw_train.csv',
     help='Path to the training data.')
 
 parser.add_argument(
-    '--test_data', type=str, default='C:\\Users\\DominikSchmitt\\Desktop\\studienarbeit_playground\\wide_deep\\zuege2_newraw_test.csv',
+    '--test_data', type=str, default='/home/dominikschmitt/Dokumente/Github/studienarbeit_playground/wide_deep/zuege2_newraw_test.csv',
     help='Path to the test data.')
 
 _NUM_EXAMPLES = {
