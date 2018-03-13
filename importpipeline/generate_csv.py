@@ -1,11 +1,16 @@
 import sys
-import mysqldb 
+import pymysql
 import csv
+import json
 
-mydb = mysqldb.connect(host='localhost',
-    user='',
-    passwd='',
-    db='')
+# open config file with database access and some other stuff
+with open('config.json', 'r') as f:
+    config = json.load(f)
+    
+# TODO create functions for query and parsing and preprocessing and write to csv    
+    
+# connect to database
+mydb = pymysql.connect(config['host'],config['user'],config['password'],config['database'])
 cursor = mydb.cursor()
 
 ## query
@@ -26,5 +31,5 @@ del csv_writer # close csv file
 
 cursor.close()
 mydb.close()
-print "Query executed."
-print "Wrote %s rows to csv." % cursor.rowcount 
+print("Query executed.")
+print("Wrote %s rows to csv." % cursor.rowcount)
