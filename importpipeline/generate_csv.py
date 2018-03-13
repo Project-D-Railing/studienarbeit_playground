@@ -1,4 +1,6 @@
 import sys
+from glob import glob
+import os
 import pymysql
 import csv
 import datetime
@@ -50,11 +52,22 @@ def writevocalfile(name,vocab):
     with open(filename, "w+") as file:
         for item in lines:
             file.write("%s\n" % item)
-         
+     
+# use this funktion to determine which ID's are already selected and used
+def lookuplocalfiles():
+    files_list = glob(os.path.join('./train', '*.csv'))
+    for a_file in sorted(files_list):
+        print(a_file)  
+  
+
+
 # open config file with database access and some other stuff
 with open('config.json', 'r') as f:
     config = json.load(f)
-    
+    # pack these as parameters or into a config file
+    MODE = 'train'
+    STARTID = 350000
+    ENDID = 390000
 # TODO create functions for query and parsing and preprocessing and write to csv    
     
 # connect to database
@@ -62,7 +75,7 @@ mydb = pymysql.connect(config['host'],config['user'],config['password'],config['
 cursor = mydb.cursor()
 
 ## query
-query = ("SELECT * FROM zuege2 WHERE datum='2018-03-12' AND evanr=8000191")
+query = ("SELECT * FROM zuege2 WHERE id > '%s' AND id < '%s' LIMIT 500000")
 
 
 ### write to csv file
@@ -74,11 +87,12 @@ query = ("SELECT * FROM zuege2 WHERE datum='2018-03-12' AND evanr=8000191")
 csv_writer = csv.writer(open("./train/CSV_Output.csv", "wt", newline="\n", encoding="utf-8")) # create csv
 try:
    # Execute the SQL command
-   cursor.execute(query)
+   cursor.execute(query,[STARTID,ENDID])
    # Fetch all the rows in a list of lists.
    results = cursor.fetchall()
-   
-   csv_writer.writerow([i[0] for i in cursor.description]) # write headers
+  
+   # this are the headers of the database but we customize these
+   #csv_writer.writerow([i[0] for i in cursor.description]) # write headers
    
    zugklasse_vocab = openvocalfile('zugklasse')
    zugowner_vocab = openvocalfile('zugowner')
@@ -88,6 +102,7 @@ try:
 
    #print(zugklasse_vocab)
    for row in results:
+      # ACHTUNG die id ist nicht relevant und sollte nicht mit ins Modell gegeben werden da auto increment aus der Datenbank
       id = row[0]
       zugid = row[1]
       zugverkehrstyp = row[2]
@@ -154,8 +169,11 @@ try:
 
       
       # end preprocessing
-
-
+      row = []
+      row.append(someint)
+      row.append(arzeitist)
+      row.append(dpzeitsoll)
+      row.append(datum)
       # collect preprocessed values and save them
       # Now write the results
       csv_writer.writerow(row) # write records
@@ -177,3 +195,4 @@ cursor.close()
 mydb.close()
 print("Query executed.")
 print("Wrote %s rows to csv." % cursor.rowcount)
+lookuplocalfiles()
