@@ -37,7 +37,7 @@ def openvocalfile(name):
     # ii#
     lines = []
     filename = "./vocabfiles/" + str(name) + ".txt"
-    with open(filename, "r+") as file:
+    with open(filename, "w+") as file:
         for line in file:
             line = line.rstrip('\n')
             lines.append(line)
@@ -82,6 +82,10 @@ try:
    
    zugklasse_vocab = openvocalfile('zugklasse')
    zugowner_vocab = openvocalfile('zugowner')
+   linie_vocab = openvocalfile('linie')
+   gleisist_vocab = openvocalfile('gleisist')
+   gleissoll_vocab = openvocalfile('gleissoll')
+
    #print(zugklasse_vocab)
    for row in results:
       id = row[0]
@@ -129,17 +133,30 @@ try:
       if zugklasse not in zugklasse_vocab:
         #print('Fehlt')
         zugklasse_vocab.append(zugklasse)
+
       # preprocess linie
-      
+      if linie not in linie_vocab:
+        #print('Fehlt')
+        linie_vocab.append(linie)
+
       # preprocess gleisist,gleissoll
-      
+      if gleisist not in gleisist_vocab:
+        #print('Fehlt')
+        gleisist_vocab.append(gleisist)
+
+      if gleissoll not in gleissoll_vocab:
+        #print('Fehlt')
+        gleissoll_vocab.append(gleissoll)
+
       # preprocess datum
-      
-      
-      
+      datum = str(datum)
+      datum = datum.replace("-", "")
+
       
       # end preprocessing
 
+
+      # collect preprocessed values and save them
       # Now write the results
       csv_writer.writerow(row) # write records
 except Exception as ex:
@@ -151,6 +168,10 @@ except Exception as ex:
 #print(zugklasse_vocab)
 writevocalfile('zugklasse',zugklasse_vocab)
 writevocalfile('zugowner',zugowner_vocab)
+writevocalfile('linie',linie_vocab)
+writevocalfile('gleisist',gleisist_vocab)
+writevocalfile('gleissoll',gleissoll_vocab)
+
 del csv_writer # close csv file
 cursor.close()
 mydb.close()
