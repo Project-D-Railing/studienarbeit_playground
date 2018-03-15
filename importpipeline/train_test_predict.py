@@ -41,10 +41,10 @@ parser.add_argument(
     help="Valid model types: {'testa'}.")
 
 parser.add_argument(
-    '--train_epochs', type=int, default=4, help='Number of training epochs.')
+    '--train_epochs', type=int, default=8, help='Number of training epochs.')
 
 parser.add_argument(
-    '--epochs_per_eval', type=int, default=1,
+    '--epochs_per_eval', type=int, default=2,
     help='The number of training epochs to run between evaluations.')
 
 parser.add_argument(
@@ -79,11 +79,11 @@ def build_model_coloumns(model_type):
         zugnummer = tf.feature_column.numeric_column('zugnummer')
         #linie = tf.feature_column.numeric_column('linie')
         evanr = tf.feature_column.numeric_column('evanr')
-        #arzeitsoll = tf.feature_column.numeric_column('arzeitsoll')
+        arzeitsoll = tf.feature_column.numeric_column('arzeitsoll')
         #arzeitist = tf.feature_column.numeric_column('arzeitist')
-        #dpzeitsoll = tf.feature_column.numeric_column('dpzeitsoll')
+        dpzeitsoll = tf.feature_column.numeric_column('dpzeitsoll')
         #dpzeitist = tf.feature_column.numeric_column('dpzeitist')
-        #gleissoll = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='gleissoll', vocabulary_file='./vocabfiles/gleissoll.txt',num_oov_buckets=10))
+        gleissoll = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='gleissoll', vocabulary_file='./vocabfiles/gleissoll.txt',num_oov_buckets=10))
         #gleisist = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='gleisist', vocabulary_file='./vocabfiles/gleisist.txt',num_oov_buckets=10))
         datum = tf.feature_column.numeric_column('datum')
         #zugstatus = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list('zugstatus', ['n', 'c', 'p']))
@@ -101,11 +101,11 @@ def build_model_coloumns(model_type):
             zugnummer,
             #linie,
             evanr,
-            #arzeitsoll,
+            arzeitsoll,
             #arzeitist,
-            #dpzeitsoll,
+            dpzeitsoll,
             #dpzeitist,
-            #gleissoll,
+            gleissoll,
             #gleisist,
             datum,
             #zugstatus,    
@@ -148,7 +148,7 @@ def input_fn_mode(mode):
     # add shuffle to params
     shuffle = True
     num_epochs = 50
-    batch_size = 200
+    batch_size = 1000
     
     if shuffle:
         dataset = dataset.shuffle(buffer_size=1000)
@@ -176,7 +176,7 @@ def build_estimator(model_dir, model_type):
         hidden_units=[100, 75, 50, 25],
         model_dir=model_dir,
         feature_columns=base_coloumns,
-        n_classes=100000)
+        n_classes=1441)
   elif model_type == 'deep':
     return None
   else:
@@ -192,9 +192,9 @@ def main(unused_argv):
   print("Model done.")
   # Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
   for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
-    model.train(input_fn=lambda: input_fn_mode("train"),steps=300)
+    model.train(input_fn=lambda: input_fn_mode("train"),steps=1000)
 
-    results = model.evaluate(input_fn=lambda: input_fn_mode("train"))
+    results = model.evaluate(input_fn=lambda: input_fn_mode("train"),steps=10)
 
     # Display evaluation metrics
     print('Results at epoch', (n + 1) * FLAGS.epochs_per_eval)

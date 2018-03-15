@@ -12,13 +12,13 @@ def timetotimeint(input):
     input = str(input)
     # first check all times if they are none
     if input == 'None':
-     input = "25:00:00"
+     input = "24:00:00"
        
     # now all times are 'valid' ehhrrmmm
     # convert tome to integer none values are now negative numbers like -1
     hhmmss = input
     (h, m, s) = hhmmss.split(':')
-    result = int(h) * 3600 + int(m) * 60 + int(s)
+    result = int(h) * 60 + int(m)
     return result
 
     
