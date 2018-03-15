@@ -12,7 +12,7 @@ def timetotimeint(input):
     input = str(input)
     # first check all times if they are none
     if input == 'None':
-     input = "00:00:-01"
+     input = "25:00:00"
        
     # now all times are 'valid' ehhrrmmm
     # convert tome to integer none values are now negative numbers like -1
@@ -51,7 +51,10 @@ def writevocalfile(name,vocab):
     filename = "./vocabfiles/" + str(name) + ".txt"
     with open(filename, "w+") as file:
         for item in lines:
-            file.write("%s\n" % item)
+            if item == "":
+                print("None item found, dont save")
+            else:
+                file.write("%s\n" % item)
      
 # use this funktion to determine which ID's are already selected and used
 def lookuplocalfiles():
@@ -129,6 +132,9 @@ try:
       #this regex matchges zugid into 3 groups
       match = re.match(r"(\-*[0-9]*)\-([0-9]*)\-([0-9]*)$", zugid)
       dailytripid = match.group(1)
+      dailytripidparta = dailytripid[:6]
+      dailytripidpartb = dailytripid[6:12]
+      dailytripidpartc = dailytripid[12:]
       departuredatestartstation = match.group(2)
       stopnumber = match.group(3)
       #print(stopnumber)
@@ -170,7 +176,9 @@ try:
       
       # end preprocessing
       row = []
-      row.append(dailytripid)
+      row.append(dailytripidparta)
+      row.append(dailytripidpartb)
+      row.append(dailytripidpartc)
       row.append(departuredatestartstation)
       row.append(stopnumber)
       row.append(zugverkehrstyp)
