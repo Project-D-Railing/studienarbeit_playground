@@ -1,7 +1,8 @@
 import argparse
 import shutil
 import sys
-
+from glob import glob
+import os
 import tensorflow as tf
 
 
@@ -38,10 +39,75 @@ parser.add_argument(
 parser.add_argument(
     '--test_data', type=str, default='./test/zuege2_newraw_test.csv',
     help='Path to the test data.')
-    parser.add_argument(
+parser.add_argument(
     '--predict_data', type=str, default='./predict/zuege2_newraw_test.csv',
     help='Path to the predict data.')
 
+
+_CSV_COLUMNS = ["id", "zugid"]
+
+_CSV_COLUMN_DEFAULTS = [[0],[0]]
+   
+
+   
+def build_model_coloumns(model_type):
+    id = tf.feature_column.numeric_column('id')
+    zugverkehrstyp = tf.feature_column.categorical_column_with_vocabulary_list('zugverkehrstyp', ['D', 'N', 'S', 'F' , 'NULL'])
+    arzeitsoll = categorical_column_with_vocabulary_file(key='arzeitsoll', vocabulary_file='./vocabfiles/arzeitsoll.txt',num_oov_buckets=0)
+
+    
+    coloumns = [
+        id,
+        zugverkehrstyp,
+        arzeitsoll    
+    ]
+
+    return coloumns
+
+def parse_csv(value):
+    print('Parsing', value)
+    columns = tf.decode_csv(value, record_defaults=_CSV_COLUMN_DEFAULTS)
+    features = dict(zip(_CSV_COLUMNS, columns))
+    labels = features.pop('arzeitist')
+    #print(labels)
+    #exit()
+    return features, labels
+    
+def input_fn(mode):
+    directory = ""
+    if mode == "train":
+        directory = "./train/*.csv"
+    elif mode == "test":
+        directory = "./test/*.csv"
+    else:
+        directory = "./predict/*.csv"
+    
+    # get all filenames for datasets in this mode, shuffel them
+    filenames = glob(os.path.join(directory))
+    
+    print(filenames)
+    #exit()
+    
+    # Extract lines from input files using the Dataset API.
+    dataset = tf.data.TextLineDataset(filenames)
+    
+    # add shuffle to params
+    shuffle = True
+    if shuffle:
+        dataset = dataset.shuffle(buffer_size=1000)
+
+    dataset = dataset.map(parse_csv, num_parallel_calls=5)
+
+    # We call repeat after shuffling, rather than before, to prevent separate
+    # epochs from blending together.
+    dataset = dataset.repeat(num_epochs)
+    dataset = dataset.batch(batch_size)
+ 
+    print(dataset)
+    exit()
+    return dataset
+
+    
     
 def build_estimator(model_dir, model_type):
   """Build an estimator appropriate for the given model type."""
@@ -53,8 +119,9 @@ def build_estimator(model_dir, model_type):
         feature_columns=lambda: build_model_coloumns(model_type),
         )
   elif model_type == 'deep':
-    
+    return None
   else:
+    return None
     
     
     
@@ -65,18 +132,17 @@ def main(unused_argv):
   print("Model done.")
   # Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
   for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
-    model.train(input_fn=lambda: input_fn(
-        FLAGS.train_data, FLAGS.epochs_per_eval, True, FLAGS.batch_size))
+    model.train(input_fn=lambda: input_fn('train'))
 
-    results = model.evaluate(input_fn=lambda: input_fn(
-        FLAGS.test_data, 1, False, FLAGS.batch_size))
+    #results = model.evaluate(input_fn=lambda: input_fn(
+    #    FLAGS.test_data, 1, False, FLAGS.batch_size))
 
     # Display evaluation metrics
     print('Results at epoch', (n + 1) * FLAGS.epochs_per_eval)
     print('-' * 60)
 
-    for key in sorted(results):
-      print('%s: %s' % (key, results[key]))
+    #for key in sorted(results):
+    #  print('%s: %s' % (key, results[key]))
 
 
     
