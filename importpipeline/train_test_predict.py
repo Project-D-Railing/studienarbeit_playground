@@ -5,12 +5,28 @@ from glob import glob
 import os
 import tensorflow as tf
 
-
 _CSV_COLUMNS = [
-    "id", "zugid", "zugverkehrstyp", "zugtyp", "zugowner", "zugklasse", "zugnummer", "zugnummerfull", "linie", "evanr", "arzeitsoll", "arzeitist", "dpzeitsoll", "dpzeitist", "gleissoll", "gleisist", "datum", "streckengeplanthash", "streckenchangedhash", "zugstatus"
-]
+    "dailytripid",
+    "departuredatestartstation",
+    "stopnumber",
+    "zugverkehrstyp",
+    "zugtyp",
+    "zugowner",
+    "zugklasse",
+    "zugnummer",
+    "linie",
+    "evanr",
+    "arzeitsoll",
+    "arzeitist",
+    "dpzeitsoll",
+    "dpzeitist",
+    "gleissoll",
+    "gleisist",
+    "datum",
+    "zugstatus",
+    ]
 
-_CSV_COLUMN_DEFAULTS = [[0], [""], [""], [""], [""], [""], [0], [""], [""], [0], [""], [""], [""], [""], [""], [""], [""], [""], [""], [""]]
+_CSV_COLUMN_DEFAULTS = [[0], [0], [0], [""], [""], [""], [""], [0], [""], [0], [0], [0], [0], [0], [""], [""], [0], [""]]
 
 parser = argparse.ArgumentParser()
 
@@ -44,9 +60,6 @@ parser.add_argument(
     help='Path to the predict data.')
 
 
-_CSV_COLUMNS = ["id", "zugid"]
-
-_CSV_COLUMN_DEFAULTS = [[0],[0]]
    
 
    
@@ -68,7 +81,9 @@ def parse_csv(value):
     print('Parsing', value)
     columns = tf.decode_csv(value, record_defaults=_CSV_COLUMN_DEFAULTS)
     features = dict(zip(_CSV_COLUMNS, columns))
+
     labels = features.pop('arzeitist')
+     
     #print(labels)
     #exit()
     return features, labels
@@ -87,12 +102,15 @@ def input_fn(mode):
     
     print(filenames)
     #exit()
-    
+    filename = filenames[1]
     # Extract lines from input files using the Dataset API.
     dataset = tf.data.TextLineDataset(filenames)
     
     # add shuffle to params
     shuffle = True
+    num_epochs = 50
+    batch_size = 200
+    
     if shuffle:
         dataset = dataset.shuffle(buffer_size=1000)
 
@@ -103,8 +121,7 @@ def input_fn(mode):
     dataset = dataset.repeat(num_epochs)
     dataset = dataset.batch(batch_size)
  
-    print(dataset)
-    exit()
+
     return dataset
 
     

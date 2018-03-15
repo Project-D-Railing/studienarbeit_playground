@@ -174,9 +174,20 @@ try:
       row.append(departuredatestartstation)
       row.append(stopnumber)
       row.append(zugverkehrstyp)
+      row.append(zugtyp)
+      row.append(zugowner)
+      row.append(zugklasse)
+      row.append(zugnummer)
+      row.append(linie)
+      row.append(evanr)
+      row.append(arzeitsoll)
       row.append(arzeitist)
       row.append(dpzeitsoll)
+      row.append(dpzeitist)
+      row.append(gleissoll)
+      row.append(gleisist)
       row.append(datum)
+      row.append(zugstatus)
       # collect preprocessed values and save them
       # Now write the results
       csv_writer.writerow(row) # write records
