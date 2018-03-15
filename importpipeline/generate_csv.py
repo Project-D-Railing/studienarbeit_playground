@@ -128,8 +128,8 @@ try:
       # preprocess zugid
       #this regex matchges zugid into 3 groups
       match = re.match(r"(\-*[0-9]*)\-([0-9]*)\-([0-9]*)$", zugid)
-      someint = match.group(1)
-      sometime = match.group(2)
+      dailytripid = match.group(1)
+      departuredatestartstation = match.group(2)
       stopnumber = match.group(3)
       #print(stopnumber)
       
@@ -170,7 +170,7 @@ try:
       
       # end preprocessing
       row = []
-      row.append(someint)
+      row.append(dailytripid)
       row.append(arzeitist)
       row.append(dpzeitsoll)
       row.append(datum)
