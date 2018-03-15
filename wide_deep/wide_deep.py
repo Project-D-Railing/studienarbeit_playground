@@ -50,11 +50,11 @@ parser.add_argument(
     '--batch_size', type=int, default=1000, help='Number of examples per batch.')
 
 parser.add_argument(
-    '--train_data', type=str, default='/home/dominikschmitt/Dokumente/Github/studienarbeit_playground/wide_deep/zuege2_newraw_train.csv',
+    '--train_data', type=str, default='./zuege2_newraw_train.csv',
     help='Path to the training data.')
 
 parser.add_argument(
-    '--test_data', type=str, default='/home/dominikschmitt/Dokumente/Github/studienarbeit_playground/wide_deep/zuege2_newraw_test.csv',
+    '--test_data', type=str, default='./zuege2_newraw_test.csv',
     help='Path to the test data.')
 
 _NUM_EXAMPLES = {
@@ -196,7 +196,7 @@ def input_fn(data_file, num_epochs, shuffle, batch_size):
 
 def main(unused_argv):
   # Clean up the model directory if present
-  shutil.rmtree(FLAGS.model_dir, ignore_errors=True)
+  #shutil.rmtree(FLAGS.model_dir, ignore_errors=True)
   model = build_estimator(FLAGS.model_dir, FLAGS.model_type)
   print("Model done.")
   # Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.

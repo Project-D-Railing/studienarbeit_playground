@@ -171,6 +171,9 @@ try:
       # end preprocessing
       row = []
       row.append(dailytripid)
+      row.append(departuredatestartstation)
+      row.append(stopnumber)
+      row.append(zugverkehrstyp)
       row.append(arzeitist)
       row.append(dpzeitsoll)
       row.append(datum)
