@@ -6,6 +6,7 @@ import csv
 import datetime
 import json
 import re
+import io
 
 # used by arzeitist,arzeitsoll,dpzeitist,dpzeitsoll
 def timetotimeint(input):
@@ -27,7 +28,7 @@ def timetotimeint(input):
 def coloumntovocalfileold(name,input):
     # ii#
     filename = "./vocabfiles/" + str(name) + ".txt"
-    with open(filename, "r+") as file:
+    with io.open(filename, mode="r+", encoding="utf-8") as file:
         for line in file:
             if input in line:
                 break
@@ -39,7 +40,7 @@ def openvocalfile(name):
     # ii#
     lines = []
     filename = "./vocabfiles/" + str(name) + ".txt"
-    with open(filename, "w+") as file:
+    with open(filename, mode="w+", encoding="utf-8") as file:
         for line in file:
             line = line.rstrip('\n')
             lines.append(line)
@@ -49,7 +50,7 @@ def writevocalfile(name,vocab):
     # ii#
     lines = vocab
     filename = "./vocabfiles/" + str(name) + ".txt"
-    with open(filename, "w+") as file:
+    with open(filename, mode="w+", encoding="utf-8") as file:
         for item in lines:
             if item == "":
                 print("None item found, dont save")
