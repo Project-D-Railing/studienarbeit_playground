@@ -41,7 +41,7 @@ parser.add_argument(
     help="Valid model types: {'testa'}.")
 
 parser.add_argument(
-    '--train_epochs', type=int, default=8, help='Number of training epochs.')
+    '--train_epochs', type=int, default=3000, help='Number of training epochs.')
 
 parser.add_argument(
     '--epochs_per_eval', type=int, default=2,
@@ -119,7 +119,8 @@ def parse_csv(value):
     print('Parsing', value)
     columns = tf.decode_csv(value, record_defaults=_CSV_COLUMN_DEFAULTS)
     features = dict(zip(_CSV_COLUMNS, columns))
-
+    none = features.pop('dpzeitist')
+    none2 = features.pop('gleisist')
     labels = features.pop('arzeitist')
     
 
@@ -147,11 +148,11 @@ def input_fn_mode(mode):
     
     # add shuffle to params
     shuffle = True
-    num_epochs = 50
-    batch_size = 1000
+    num_epochs = 4000
+    batch_size = 100
     
     if shuffle:
-        dataset = dataset.shuffle(buffer_size=1000)
+        dataset = dataset.shuffle(buffer_size=10000)
 
     dataset = dataset.map(parse_csv, num_parallel_calls=5)
 
@@ -170,12 +171,16 @@ def build_estimator(model_dir, model_type):
 
   base_coloumns = build_model_coloumns('testa')
   """Build an estimator appropriate for the given model type."""
-
+  learning_rate = 0.5
   if model_type == 'testa':
     return tf.estimator.DNNClassifier(
-        hidden_units=[100, 75, 50, 25],
+        hidden_units=[256, 128 , 128],
         model_dir=model_dir,
         feature_columns=base_coloumns,
+        optimizer=tf.train.ProximalAdagradOptimizer(learning_rate=learning_rate),
+        activation_fn=tf.nn.softmax,
+        dropout=0.2,
+        loss_reduction=tf.losses.Reduction.SUM_OVER_BATCH_SIZE,
         n_classes=1441)
   elif model_type == 'deep':
     return None
@@ -192,9 +197,9 @@ def main(unused_argv):
   print("Model done.")
   # Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
   for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
-    model.train(input_fn=lambda: input_fn_mode("train"),steps=1000)
+    model.train(input_fn=lambda: input_fn_mode("train"),steps=250)
 
-    results = model.evaluate(input_fn=lambda: input_fn_mode("train"),steps=10)
+    results = model.evaluate(input_fn=lambda: input_fn_mode("train"),steps=1)
 
     # Display evaluation metrics
     print('Results at epoch', (n + 1) * FLAGS.epochs_per_eval)
