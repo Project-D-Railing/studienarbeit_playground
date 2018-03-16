@@ -70,8 +70,8 @@ with open('config.json', 'r') as f:
     config = json.load(f)
     # pack these as parameters or into a config file
     MODE = 'train'
-    STARTID = 350000
-    ENDID = 390000
+    STARTID = 1000000
+    ENDID = 1250000
 # TODO create functions for query and parsing and preprocessing and write to csv    
     
 # connect to database
