@@ -152,7 +152,7 @@ def input_fn_mode(mode):
     batch_size = 100
     
     if shuffle:
-        dataset = dataset.shuffle(buffer_size=10000)
+        dataset = dataset.shuffle(buffer_size=100000)
 
     dataset = dataset.map(parse_csv, num_parallel_calls=5)
 
@@ -171,13 +171,13 @@ def build_estimator(model_dir, model_type):
 
   base_coloumns = build_model_coloumns('testa')
   """Build an estimator appropriate for the given model type."""
-  learning_rate = 0.5
+  learning_rate = 0.05
   if model_type == 'testa':
     return tf.estimator.DNNClassifier(
-        hidden_units=[256, 128 , 128],
+        hidden_units=[32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32],
         model_dir=model_dir,
         feature_columns=base_coloumns,
-        optimizer=tf.train.ProximalAdagradOptimizer(learning_rate=learning_rate),
+        optimizer=tf.train.AdadeltaOptimizer(learning_rate=learning_rate, rho=0.85, epsilon=1e-04, use_locking=False, name='Adadelta'),
         activation_fn=tf.nn.softmax,
         dropout=0.2,
         loss_reduction=tf.losses.Reduction.SUM_OVER_BATCH_SIZE,
@@ -197,7 +197,7 @@ def main(unused_argv):
   print("Model done.")
   # Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
   for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
-    model.train(input_fn=lambda: input_fn_mode("train"),steps=250)
+    model.train(input_fn=lambda: input_fn_mode("train"),steps=2000)
 
     results = model.evaluate(input_fn=lambda: input_fn_mode("train"),steps=1)
 
