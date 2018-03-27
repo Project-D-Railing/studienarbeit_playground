@@ -173,18 +173,30 @@ def build_estimator(model_dir, model_type):
   """Build an estimator appropriate for the given model type."""
   learning_rate = 0.05
   if model_type == 'testa':
+    optimizer = tf.train.FtrlOptimizer(learning_rate=50.0, l2_regularization_strength=1.0)
+
     return tf.estimator.DNNClassifier(
-        hidden_units=[32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32],
+        hidden_units=[1441, 512, 256, 1441],
         model_dir=model_dir,
         feature_columns=base_coloumns,
-        optimizer=tf.train.AdadeltaOptimizer(learning_rate=learning_rate, rho=0.85, epsilon=1e-04, use_locking=False, name='Adadelta'),
+        optimizer=optimizer,
         activation_fn=tf.nn.softmax,
-        dropout=0.2,
-        loss_reduction=tf.losses.Reduction.SUM_OVER_BATCH_SIZE,
+        dropout=0.1,
+        loss_reduction=tf.losses.Reduction.MEAN,
         n_classes=1441)
   elif model_type == 'deep':
     return None
   else:
+    optimizer = tf.train.FtrlOptimizer(learning_rate=50.0, l2_regularization_strength=0.001)
+
+    kernel_mapper = tf.contrib.kernel_methods.RandomFourierFeatureMapper(
+    input_dim=784, output_dim=2000, stddev=5.0, name='rffm')
+    kernel_mappers = {image_column: [kernel_mapper]}
+    estimator = tf.contrib.kernel_methods.KernelLinearClassifier(
+        n_classes=1441, optimizer=optimizer, kernel_mappers=kernel_mappers)
+
+  
+  
     return None
     
     

@@ -6,3 +6,5 @@ importpipeline/config\.json
 importpipeline/model/
 
 importpipeline/train/
+
+importpipeline/vocabfiles/

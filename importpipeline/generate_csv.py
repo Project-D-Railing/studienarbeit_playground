@@ -79,7 +79,7 @@ mydb = pymysql.connect(config['host'],config['user'],config['password'],config['
 cursor = mydb.cursor()
 
 ## query
-query = ("SELECT * FROM zuege2 WHERE id > '%s' AND id < '%s' LIMIT 500000")
+query = ("SELECT * FROM zuege2 WHERE evanr=8000191 LIMIT 500000")
 
 
 ### write to csv file
@@ -91,7 +91,7 @@ query = ("SELECT * FROM zuege2 WHERE id > '%s' AND id < '%s' LIMIT 500000")
 csv_writer = csv.writer(open("./train/CSV_Output.csv", "wt", newline="\n", encoding="utf-8")) # create csv
 try:
    # Execute the SQL command
-   cursor.execute(query,[STARTID,ENDID])
+   cursor.execute(query)
    # Fetch all the rows in a list of lists.
    results = cursor.fetchall()
   
