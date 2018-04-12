@@ -171,12 +171,12 @@ def build_estimator(model_dir, model_type):
 
   base_coloumns = build_model_coloumns('testa')
   """Build an estimator appropriate for the given model type."""
-  learning_rate = 0.05
+  learning_rate = 1
   if model_type == 'testa':
-    optimizer = tf.train.FtrlOptimizer(learning_rate=50.0, l2_regularization_strength=1.0)
+    optimizer = tf.train.FtrlOptimizer(learning_rate=learning_rate, l2_regularization_strength=0.000)
 
     return tf.estimator.DNNClassifier(
-        hidden_units=[1441, 512, 256, 1441],
+        hidden_units=[5000, 4000, 4000],
         model_dir=model_dir,
         feature_columns=base_coloumns,
         optimizer=optimizer,
@@ -187,13 +187,10 @@ def build_estimator(model_dir, model_type):
   elif model_type == 'deep':
     return None
   else:
-    optimizer = tf.train.FtrlOptimizer(learning_rate=50.0, l2_regularization_strength=0.001)
+    optimizer = tf.train.FtrlOptimizer(learning_rate=50.0, l2_regularization_strength=0.1)
 
-    kernel_mapper = tf.contrib.kernel_methods.RandomFourierFeatureMapper(
-    input_dim=784, output_dim=2000, stddev=5.0, name='rffm')
-    kernel_mappers = {image_column: [kernel_mapper]}
     estimator = tf.contrib.kernel_methods.KernelLinearClassifier(
-        n_classes=1441, optimizer=optimizer, kernel_mappers=kernel_mappers)
+        n_classes=1441, optimizer=optimizer)
 
   
   
@@ -205,11 +202,12 @@ def build_estimator(model_dir, model_type):
 def main(unused_argv):
   # Clean up the model directory if present
   #shutil.rmtree(FLAGS.model_dir, ignore_errors=True)
+
   model = build_estimator(FLAGS.model_dir, FLAGS.model_type)
   print("Model done.")
   # Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
   for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
-    model.train(input_fn=lambda: input_fn_mode("train"),steps=2000)
+    model.train(input_fn=lambda: input_fn_mode("train"),steps=20000)
 
     results = model.evaluate(input_fn=lambda: input_fn_mode("train"),steps=1)
 
