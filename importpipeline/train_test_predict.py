@@ -171,7 +171,7 @@ def build_estimator(model_dir, model_type):
 
   base_coloumns = build_model_coloumns('testa')
   """Build an estimator appropriate for the given model type."""
-  learning_rate = 1
+  learning_rate = 50
   if model_type == 'testa':
     optimizer = tf.train.FtrlOptimizer(learning_rate=learning_rate, l2_regularization_strength=0.000)
 
@@ -181,7 +181,7 @@ def build_estimator(model_dir, model_type):
         feature_columns=base_coloumns,
         optimizer=optimizer,
         activation_fn=tf.nn.softmax,
-        dropout=0.1,
+        dropout=0.0,
         loss_reduction=tf.losses.Reduction.MEAN,
         n_classes=1441)
   elif model_type == 'deep':
@@ -207,7 +207,7 @@ def main(unused_argv):
   print("Model done.")
   # Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
   for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
-    model.train(input_fn=lambda: input_fn_mode("train"),steps=20000)
+    model.train(input_fn=lambda: input_fn_mode("train"),steps=500)
 
     results = model.evaluate(input_fn=lambda: input_fn_mode("train"),steps=1)
 
