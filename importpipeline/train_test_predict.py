@@ -4,6 +4,7 @@ import sys
 from glob import glob
 import os
 import tensorflow as tf
+import matplotlib.pyplot as plt
 
 _CSV_COLUMNS = [
     "dailytripidparta",
@@ -119,8 +120,8 @@ def parse_csv(value):
     print('Parsing', value)
     columns = tf.decode_csv(value, record_defaults=_CSV_COLUMN_DEFAULTS)
     features = dict(zip(_CSV_COLUMNS, columns))
-    none = features.pop('dpzeitist')
-    none2 = features.pop('gleisist')
+    #none = features.pop('dpzeitist')
+    #none2 = features.pop('gleisist')
     labels = features.pop('arzeitist')
     
 
@@ -149,7 +150,7 @@ def input_fn_mode(mode):
     # add shuffle to params
     shuffle = True
     num_epochs = 4000
-    batch_size = 100
+    batch_size = 10
     
     if shuffle:
         dataset = dataset.shuffle(buffer_size=100000)
@@ -171,12 +172,12 @@ def build_estimator(model_dir, model_type):
 
   base_coloumns = build_model_coloumns('testa')
   """Build an estimator appropriate for the given model type."""
-  learning_rate = 50
+  learning_rate = 4
   if model_type == 'testa':
     optimizer = tf.train.FtrlOptimizer(learning_rate=learning_rate, l2_regularization_strength=0.000)
 
     return tf.estimator.DNNClassifier(
-        hidden_units=[5000, 4000, 4000],
+        hidden_units=[2000, 2000, 2000],
         model_dir=model_dir,
         feature_columns=base_coloumns,
         optimizer=optimizer,
@@ -210,6 +211,19 @@ def main(unused_argv):
     model.train(input_fn=lambda: input_fn_mode("train"),steps=500)
 
     results = model.evaluate(input_fn=lambda: input_fn_mode("train"),steps=1)
+    
+    predictions = model.predict(input_fn=lambda: input_fn_mode("predict"))
+    
+    for pred_dict in zip(predictions):
+    
+
+        print(pred_dict[0]['probabilities'])
+        print(pred_dict[0]['class_ids'][0])
+        plt.plot(pred_dict[0]['probabilities'])
+        plt.ylabel('some numbers')
+        plt.show()
+        break
+        
 
     # Display evaluation metrics
     print('Results at epoch', (n + 1) * FLAGS.epochs_per_eval)
