@@ -208,7 +208,7 @@ def main(unused_argv):
   print("Model done.")
   # Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
   for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
-    model.train(input_fn=lambda: input_fn_mode("train"),steps=500)
+    model.train(input_fn=lambda: input_fn_mode("train"),steps=5)
 
     results = model.evaluate(input_fn=lambda: input_fn_mode("train"),steps=1)
     
