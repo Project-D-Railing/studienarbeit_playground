@@ -79,7 +79,7 @@ mydb = pymysql.connect(config['host'],config['user'],config['password'],config['
 cursor = mydb.cursor()
 
 ## query
-query = ("SELECT * FROM zuege2 WHERE id > '%s' AND id < '%s' LIMIT 500000")
+query = ("SELECT id, zugid, zugverkehrstyp, zugtyp, zugowner, zugklasse, zugnummer, zugnummerfull, linie, evanr, arzeitsoll, arzeitist, dpzeitsoll, dpzeitist, gleissoll, gleisist, datum, streckengeplanthash, streckenchangedhash, zugstatus FROM zuege WHERE zugklasse='ICE' and zugnummer='100' LIMIT 1")
 
 
 ### write to csv file
@@ -88,10 +88,10 @@ query = ("SELECT * FROM zuege2 WHERE id > '%s' AND id < '%s' LIMIT 500000")
 # e.g.  test, 1000
 # or    train, 20000
 # for predict use other db with entries which should be predicted coming from a web interface or other tool
-csv_writer = csv.writer(open("./train/CSV_Output.csv", "wt", newline="\n", encoding="utf-8")) # create csv
+csv_writer = csv.writer(open("./predict/CSV_Output.csv", "wt", newline="\n", encoding="utf-8")) # create csv
 try:
    # Execute the SQL command
-   cursor.execute(query,[STARTID,ENDID])
+   cursor.execute(query)
    # Fetch all the rows in a list of lists.
    results = cursor.fetchall()
   
