@@ -146,11 +146,12 @@ def input_fn_mode(mode):
     filename = filenames[0]
     # Extract lines from input files using the Dataset API.
     dataset = tf.data.TextLineDataset(filename)
-    
+    print(filename)
+    #exit()
     # add shuffle to params
     shuffle = True
     num_epochs = 4000
-    batch_size = 10
+    batch_size = 1
     
     if shuffle:
         dataset = dataset.shuffle(buffer_size=100000)
@@ -172,16 +173,16 @@ def build_estimator(model_dir, model_type):
 
   base_coloumns = build_model_coloumns('testa')
   """Build an estimator appropriate for the given model type."""
-  learning_rate = 4
+  learning_rate = 0.02
   if model_type == 'testa':
-    optimizer = tf.train.FtrlOptimizer(learning_rate=learning_rate, l2_regularization_strength=0.000)
-
+    #optimizer = tf.train.FtrlOptimizer(learning_rate=learning_rate, l2_regularization_strength=0.000)
+    optimizer = tf.train.ProximalAdagradOptimizer(learning_rate=learning_rate,initial_accumulator_value=0.1,l1_regularization_strength=0.0,l2_regularization_strength=0.0,use_locking=False,name='ProximalAdagrad')
     return tf.estimator.DNNClassifier(
-        hidden_units=[2000, 2000, 2000],
+        hidden_units=[40,40],
         model_dir=model_dir,
         feature_columns=base_coloumns,
         optimizer=optimizer,
-        activation_fn=tf.nn.softmax,
+        activation_fn=tf.nn.relu,
         dropout=0.0,
         loss_reduction=tf.losses.Reduction.MEAN,
         n_classes=1441)
@@ -208,9 +209,9 @@ def main(unused_argv):
   print("Model done.")
   # Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
   for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
-    model.train(input_fn=lambda: input_fn_mode("train"),steps=5)
+    model.train(input_fn=lambda: input_fn_mode("train"),steps=5000)
 
-    results = model.evaluate(input_fn=lambda: input_fn_mode("train"),steps=1)
+    results = model.evaluate(input_fn=lambda: input_fn_mode("test"),steps=10)
     
     predictions = model.predict(input_fn=lambda: input_fn_mode("predict"))
     
@@ -221,7 +222,7 @@ def main(unused_argv):
         print(pred_dict[0]['class_ids'][0])
         plt.plot(pred_dict[0]['probabilities'])
         plt.ylabel('some numbers')
-        plt.show()
+        #plt.show()
         break
         
 
