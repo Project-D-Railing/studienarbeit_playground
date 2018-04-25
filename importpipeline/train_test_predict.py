@@ -1,5 +1,6 @@
 import argparse
 import shutil
+import random
 import sys
 from glob import glob
 import os
@@ -137,31 +138,57 @@ def input_fn_mode(mode):
         filenames = glob(os.path.join('./predict', '*.csv'))
     
     # get all filenames for datasets in this mode, shuffel them
-
+    random.shuffle(filenames)
    # filename = filenames[0]
     #print(filenames)
     #exit()
-
+        
    
     filename = filenames[0]
+    print(filename)
+    
+
+
     # Extract lines from input files using the Dataset API.
     dataset = tf.data.TextLineDataset(filename)
-    print(filename)
-    #exit()
-    # add shuffle to params
-    shuffle = True
-    num_epochs = 4000
-    batch_size = 1
-    
-    if shuffle:
-        dataset = dataset.shuffle(buffer_size=100000)
+    if mode == "predict":
+        dataset = dataset.map(parse_csv, num_parallel_calls=5)
+        dataset = dataset.batch(1)
+        dataset = None
+        dataset = {
+            'evanr': [8000041],
+            'arzeitsoll': [19],
+            'dailytripidparta': [-46743],
+            'dailytripidpartb': [26818], # remove zero at begin of int
+            'dailytripidpartc': [11850992],
+            'datum': [20171203],
+            'departuredatestartstation' : [1712021913],
+            'dpzeitsoll' : [21],
+            'gleissoll' : ["5"],
+            'stopnumber' : [15],
+            'zugklasse' : ["ICE"],
+            'zugnummer' : [100],
+            'zugowner' : ["80"],
+            'zugtyp' : ["p"],
+            'zugverkehrstyp' : ["F"],
+    }
 
-    dataset = dataset.map(parse_csv, num_parallel_calls=5)
 
-    # We call repeat after shuffling, rather than before, to prevent separate
-    # epochs from blending together.
-    dataset = dataset.repeat(num_epochs)
-    dataset = dataset.batch(batch_size)
+    else:
+        #add shuffle to params later
+        shuffle = True
+        num_epochs = 4000
+        batch_size = 1
+        
+        if shuffle:
+            dataset = dataset.shuffle(buffer_size=100000)
+
+        dataset = dataset.map(parse_csv, num_parallel_calls=5)
+
+        # We call repeat after shuffling, rather than before, to prevent separate
+        # epochs from blending together.
+        dataset = dataset.repeat(num_epochs)
+        dataset = dataset.batch(batch_size)
  
     #print(dataset)
     #exit()
@@ -209,22 +236,27 @@ def main(unused_argv):
   print("Model done.")
   # Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
   for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
-    model.train(input_fn=lambda: input_fn_mode("train"),steps=5000)
+    #model.train(input_fn=lambda: input_fn_mode("train"),steps=5000)
 
-    results = model.evaluate(input_fn=lambda: input_fn_mode("test"),steps=10)
+    #results = model.evaluate(input_fn=lambda: input_fn_mode("test"),steps=10)
     
     predictions = model.predict(input_fn=lambda: input_fn_mode("predict"))
-    
+    print(predictions)
+    #exit()
+    a = 0
     for pred_dict in zip(predictions):
-    
-
-        print(pred_dict[0]['probabilities'])
-        print(pred_dict[0]['class_ids'][0])
+        #print(pred_dict)
+        a = a+1
+        #exit()
+        #print(pred_dict[0]['probabilities'])
+        #print(pred_dict[0]['class_ids'][0])
         plt.plot(pred_dict[0]['probabilities'])
         plt.ylabel('some numbers')
-        #plt.show()
-        break
-        
+        plt.show()
+        if a > 0:
+            break
+    print(a)
+    exit()    
 
     # Display evaluation metrics
     print('Results at epoch', (n + 1) * FLAGS.epochs_per_eval)
