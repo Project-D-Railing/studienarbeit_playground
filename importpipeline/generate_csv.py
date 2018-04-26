@@ -8,6 +8,8 @@ import datetime
 import json
 import re
 import io
+import math
+
 
 parser = argparse.ArgumentParser()
 
@@ -29,6 +31,7 @@ def timetotimeint(input):
     hhmmss = input
     (h, m, s) = hhmmss.split(':')
     result = int(h) * 60 + int(m)
+    result = math.floor(result/60)
     return result
 
     

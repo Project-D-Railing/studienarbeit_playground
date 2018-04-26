@@ -8,3 +8,7 @@ importpipeline/model/
 importpipeline/train/
 
 importpipeline/vocabfiles/
+
+importpipeline/test/
+
+importpipeline/predict/
