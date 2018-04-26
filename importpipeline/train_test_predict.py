@@ -70,47 +70,47 @@ parser.add_argument(
    
 def build_model_coloumns(model_type):
     if model_type == "testa":
-        #dailytripidparta = tf.feature_column.numeric_column('dailytripidparta')
-        #dailytripidpartb = tf.feature_column.numeric_column('dailytripidpartb')
-        #dailytripidpartc = tf.feature_column.numeric_column('dailytripidpartc')
+        dailytripidparta = tf.feature_column.numeric_column('dailytripidparta')
+        dailytripidpartb = tf.feature_column.numeric_column('dailytripidpartb')
+        dailytripidpartc = tf.feature_column.numeric_column('dailytripidpartc')
         #departuredatestartstation = tf.feature_column.numeric_column('departuredatestartstation')
-        #stopnumber = tf.feature_column.numeric_column('stopnumber')
+        stopnumber = tf.feature_column.numeric_column('stopnumber')
         #zugverkehrstyp = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list('zugverkehrstyp', ['D', 'N', 'S', 'F' , 'NULL']))
         #zugtyp = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list('zugtyp', ['p', 'NULL']))
         #zugowner = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='zugowner', vocabulary_file='./vocabfiles/zugowner.txt',num_oov_buckets=10))
         #zugklasse = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='zugklasse', vocabulary_file='./vocabfiles/zugklasse.txt',num_oov_buckets=10))
-        #zugnummer = tf.feature_column.numeric_column('zugnummer')
+        zugnummer = tf.feature_column.numeric_column('zugnummer')
         #linie = tf.feature_column.numeric_column('linie')
-        #evanr = tf.feature_column.numeric_column('evanr')
+        evanr = tf.feature_column.numeric_column('evanr')
         arzeitsoll = tf.feature_column.numeric_column('arzeitsoll')
         #arzeitist = tf.feature_column.numeric_column('arzeitist')
         #dpzeitsoll = tf.feature_column.numeric_column('dpzeitsoll')
         #dpzeitist = tf.feature_column.numeric_column('dpzeitist')
         #gleissoll = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='gleissoll', vocabulary_file='./vocabfiles/gleissoll.txt',num_oov_buckets=10))
         #gleisist = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='gleisist', vocabulary_file='./vocabfiles/gleisist.txt',num_oov_buckets=10))
-        #datum = tf.feature_column.numeric_column('datum')
+        datum = tf.feature_column.numeric_column('datum')
         #zugstatus = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list('zugstatus', ['n', 'c', 'p']))
         
         coloumns = [
-            #dailytripidparta,
-            #dailytripidpartb,
-            #dailytripidpartc,
+            dailytripidparta,
+            dailytripidpartb,
+            dailytripidpartc,
             #departuredatestartstation,
-            #stopnumber,
+            stopnumber,
             #zugverkehrstyp,
             #zugtyp,
             #zugowner,
             #zugklasse,
-            #zugnummer,
+            zugnummer,
             #linie,
-            #evanr,
+            evanr,
             arzeitsoll,
             #arzeitist,
             #dpzeitsoll,
             #dpzeitist,
             #gleissoll,
             #gleisist,
-            #datum,
+            datum,
             #zugstatus,    
         ]
     else:
@@ -122,18 +122,18 @@ def parse_csv(value):
     print('Parsing', value)
     columns = tf.decode_csv(value, record_defaults=_CSV_COLUMN_DEFAULTS)
     features = dict(zip(_CSV_COLUMNS, columns))
-    none = features.pop('dailytripidparta')
-    none = features.pop('dailytripidpartb')
-    none = features.pop('dailytripidpartc')
+    #none = features.pop('dailytripidparta')
+    #none = features.pop('dailytripidpartb')
+    #none = features.pop('dailytripidpartc')
     none = features.pop('departuredatestartstation')
-    none = features.pop('stopnumber')
+    #none = features.pop('stopnumber')
     none = features.pop('zugverkehrstyp')
     none = features.pop('zugtyp')
     none = features.pop('zugowner')
     none = features.pop('zugklasse')
-    none = features.pop('zugnummer')
+    #none = features.pop('zugnummer')
     none = features.pop('linie')
-    none = features.pop('evanr')
+    #none = features.pop('evanr')
     #none = features.pop('arzeitsoll')
     labels = features.pop('arzeitist')
 
@@ -141,7 +141,7 @@ def parse_csv(value):
     none = features.pop('dpzeitist')
     none = features.pop('gleissoll')
     none = features.pop('gleisist')
-    none = features.pop('datum')
+    #none = features.pop('datum')
     none = features.pop('zugstatus')
 
     
@@ -174,24 +174,24 @@ def input_fn_mode(mode):
     if mode == "predict":
         dataset = dataset.map(parse_csv, num_parallel_calls=5)
         dataset = dataset.batch(1)
-        del dataset
-        dataset = {
-            #'evanr': [8000041], 
-            'arzeitsoll': [700], 
-            #'dailytripidparta': [-46743], 
-            #'dailytripidpartb': [26818], # remove zero at begin of int 
-            #'dailytripidpartc': [11850992], 
-            #'datum': [20171203], 
-            #'departuredatestartstation' : [1712021913], 
-            #'dpzeitsoll' : [21], 
-            #'gleissoll' : ["5"], 
-            #'stopnumber' : [15], 
-            #'zugklasse' : ["ICE"], 
-            #'zugnummer' : [100], 
-            #'zugowner' : ["80"], 
-            #'zugtyp' : ["p"], 
-            #'zugverkehrstyp' : ["F"], 
-        }
+        #del dataset
+        #dataset = {
+        #    'evanr': [8000041], 
+        #    'arzeitsoll': [1283], 
+        #    'dailytripidparta': [-46743], 
+        #    'dailytripidpartb': [26818], # remove zero at begin of int 
+        #    'dailytripidpartc': [11850992], 
+        #    'datum': [20171203], 
+        #    #'departuredatestartstation' : [1712021913], 
+        #    #'dpzeitsoll' : [21], 
+        #    #'gleissoll' : ["5"], 
+        #    'stopnumber' : [15], 
+        #    #'zugklasse' : ["ICE"], 
+        #    'zugnummer' : [100], 
+        #    #'zugowner' : ["80"], 
+        #    #'zugtyp' : ["p"], 
+        #    #'zugverkehrstyp' : ["F"], 
+        #}
 
 
     else:
@@ -220,20 +220,21 @@ def build_estimator(model_dir, model_type):
 
   base_coloumns = build_model_coloumns('testa')
   """Build an estimator appropriate for the given model type."""
-  learning_rate = 1.05
+  learning_rate = 0.01
   if model_type == 'testa':
-    optimizer = tf.train.FtrlOptimizer(learning_rate=learning_rate, l2_regularization_strength=0.000)
+    #optimizer = tf.train.FtrlOptimizer(learning_rate=learning_rate, l2_regularization_strength=0.000)
     #optimizer = tf.train.ProximalAdagradOptimizer(learning_rate=learning_rate,initial_accumulator_value=0.1,l1_regularization_strength=0.0,l2_regularization_strength=0.0,use_locking=False,name='ProximalAdagrad')
-    #optimizer = tf.train.AdagradOptimizer(learning_rate=learning_rate)
-    return tf.estimator.DNNClassifier(
+    optimizer = tf.train.AdagradOptimizer(learning_rate=learning_rate)
+    return tf.estimator.DNNRegressor(
         hidden_units=[40,40],
         model_dir=model_dir,
         feature_columns=base_coloumns,
         optimizer=optimizer,
-        activation_fn=tf.nn.softmax,
-        dropout=0.0,
-        loss_reduction=tf.losses.Reduction.MEAN,
-        n_classes=1441)
+        #activation_fn=tf.nn.softmax,
+        #dropout=0.0,
+        #loss_reduction=tf.losses.Reduction.MEAN,
+        #n_classes=1441
+        )
   elif model_type == 'deep':
     return None
   else:
@@ -257,7 +258,7 @@ def main(unused_argv):
   print("Model done.")
   # Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
   for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
-    model.train(input_fn=lambda: input_fn_mode("train"),steps=5000)
+    model.train(input_fn=lambda: input_fn_mode("train"),steps=50000)
 
     results = model.evaluate(input_fn=lambda: input_fn_mode("test"),steps=10)
     
@@ -306,15 +307,17 @@ def main(unused_argv):
     a = 0
     for pred_dict in zip(predictions):
         #print(pred_dict)
+        print(pred_dict[0]['predictions'][0])
         a = a+1
-        #exit()
+        if (pred_dict[0]['predictions'][0] < 300 and pred_dict[0]['predictions'][0] > 10):
+            exit()
         #print(pred_dict[0]['probabilities'])
         #print(pred_dict[0]['class_ids'][0])
-        plt.plot(pred_dict[0]['probabilities'])
+        plt.plot(pred_dict[0]['predictions'][0])
         plt.ylabel('some numbers')
         #plt.show()
-        if n % 5 == 1:
-            plt.show()
+        #if n % 105 == 1:
+        #    plt.show()
         if a > 0:
             break
     #print(a)
