@@ -74,12 +74,12 @@ def build_model_coloumns(model_type):
         #dailytripidpartb = tf.feature_column.numeric_column('dailytripidpartb')
         #dailytripidpartc = tf.feature_column.numeric_column('dailytripidpartc')
         #departuredatestartstation = tf.feature_column.numeric_column('departuredatestartstation')
-        stopnumber = tf.feature_column.numeric_column('stopnumber')
+        #stopnumber = tf.feature_column.numeric_column('stopnumber')
         #zugverkehrstyp = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list('zugverkehrstyp', ['D', 'N', 'S', 'F' , 'NULL']))
         #zugtyp = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list('zugtyp', ['p', 'NULL']))
         #zugowner = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='zugowner', vocabulary_file='./vocabfiles/zugowner.txt',num_oov_buckets=10))
         #zugklasse = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='zugklasse', vocabulary_file='./vocabfiles/zugklasse.txt',num_oov_buckets=10))
-        zugnummer = tf.feature_column.numeric_column('zugnummer')
+        #zugnummer = tf.feature_column.numeric_column('zugnummer')
         #linie = tf.feature_column.numeric_column('linie')
         #evanr = tf.feature_column.numeric_column('evanr')
         arzeitsoll = tf.feature_column.numeric_column('arzeitsoll')
@@ -96,12 +96,12 @@ def build_model_coloumns(model_type):
             #dailytripidpartb,
             #dailytripidpartc,
             #departuredatestartstation,
-            stopnumber,
+            #stopnumber,
             #zugverkehrstyp,
             #zugtyp,
             #zugowner,
             #zugklasse,
-            zugnummer,
+            #zugnummer,
             #linie,
             #evanr,
             arzeitsoll,
@@ -126,12 +126,12 @@ def parse_csv(value):
     none = features.pop('dailytripidpartb')
     none = features.pop('dailytripidpartc')
     none = features.pop('departuredatestartstation')
-    #none = features.pop('stopnumber')
+    none = features.pop('stopnumber')
     none = features.pop('zugverkehrstyp')
     none = features.pop('zugtyp')
     none = features.pop('zugowner')
     none = features.pop('zugklasse')
-    #none = features.pop('zugnummer')
+    none = features.pop('zugnummer')
     none = features.pop('linie')
     none = features.pop('evanr')
     #none = features.pop('arzeitsoll')
@@ -176,8 +176,8 @@ def input_fn_mode(mode):
         dataset = dataset.batch(1)
         del dataset
         dataset = {
-            #'evanr': [8000191], 
-            'arzeitsoll': [19], 
+            #'evanr': [8000041], 
+            'arzeitsoll': [700], 
             #'dailytripidparta': [-46743], 
             #'dailytripidpartb': [26818], # remove zero at begin of int 
             #'dailytripidpartc': [11850992], 
@@ -185,23 +185,23 @@ def input_fn_mode(mode):
             #'departuredatestartstation' : [1712021913], 
             #'dpzeitsoll' : [21], 
             #'gleissoll' : ["5"], 
-            'stopnumber' : [15], 
+            #'stopnumber' : [15], 
             #'zugklasse' : ["ICE"], 
-            'zugnummer' : [100], 
+            #'zugnummer' : [100], 
             #'zugowner' : ["80"], 
             #'zugtyp' : ["p"], 
             #'zugverkehrstyp' : ["F"], 
-    }
+        }
 
 
     else:
         #add shuffle to params later
         shuffle = True
         num_epochs = 4000
-        batch_size = 5
+        batch_size = 1
         
         if shuffle:
-            dataset = dataset.shuffle(buffer_size=100000)
+            dataset = dataset.shuffle(buffer_size=batch_size)
 
         dataset = dataset.map(parse_csv, num_parallel_calls=5)
 
@@ -220,7 +220,7 @@ def build_estimator(model_dir, model_type):
 
   base_coloumns = build_model_coloumns('testa')
   """Build an estimator appropriate for the given model type."""
-  learning_rate = 0.5
+  learning_rate = 1.05
   if model_type == 'testa':
     optimizer = tf.train.FtrlOptimizer(learning_rate=learning_rate, l2_regularization_strength=0.000)
     #optimizer = tf.train.ProximalAdagradOptimizer(learning_rate=learning_rate,initial_accumulator_value=0.1,l1_regularization_strength=0.0,l2_regularization_strength=0.0,use_locking=False,name='ProximalAdagrad')
@@ -257,9 +257,9 @@ def main(unused_argv):
   print("Model done.")
   # Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
   for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
-    model.train(input_fn=lambda: input_fn_mode("train"),steps=25000)
+    model.train(input_fn=lambda: input_fn_mode("train"),steps=5000)
 
-    #results = model.evaluate(input_fn=lambda: input_fn_mode("test"),steps=10)
+    results = model.evaluate(input_fn=lambda: input_fn_mode("test"),steps=10)
     
     
 
@@ -312,13 +312,13 @@ def main(unused_argv):
         #print(pred_dict[0]['class_ids'][0])
         plt.plot(pred_dict[0]['probabilities'])
         plt.ylabel('some numbers')
-        plt.show()
+        #plt.show()
         if n % 5 == 1:
             plt.show()
         if a > 0:
             break
     #print(a)
-    exit()    
+    #exit()    
 
     # Display evaluation metrics
     print('Results at epoch', (n + 1) * FLAGS.epochs_per_eval)
