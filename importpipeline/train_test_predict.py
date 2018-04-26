@@ -160,7 +160,7 @@ def input_fn_mode(mode):
     # get all filenames for datasets in this mode, shuffel them
     random.shuffle(filenames)
    # filename = filenames[0]
-    #print(filenames)
+    print(filenames)
     #exit()
         
    
