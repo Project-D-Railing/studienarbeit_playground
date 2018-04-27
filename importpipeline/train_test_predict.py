@@ -173,7 +173,7 @@ def input_fn_mode(mode):
     dataset = tf.data.TextLineDataset(filename)
     if mode == "predict":
         dataset = dataset.map(parse_csv, num_parallel_calls=5)
-        dataset = dataset.batch(1)
+        dataset = dataset.batch(24)
         #del dataset
         #dataset = {
         #    'evanr': [8000041], 
@@ -226,7 +226,7 @@ def build_estimator(model_dir, model_type):
     #optimizer = tf.train.ProximalAdagradOptimizer(learning_rate=learning_rate,initial_accumulator_value=0.1,l1_regularization_strength=0.0,l2_regularization_strength=0.0,use_locking=False,name='ProximalAdagrad')
     optimizer = tf.train.AdagradOptimizer(learning_rate=learning_rate)
     return tf.estimator.DNNClassifier(
-        hidden_units=[100,100],
+        hidden_units=[500,500],
         model_dir=model_dir,
         feature_columns=base_coloumns,
         #optimizer=optimizer,
@@ -260,7 +260,7 @@ def main(unused_argv):
   for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
     model.train(input_fn=lambda: input_fn_mode("train"),steps=10000)
 
-    results = model.evaluate(input_fn=lambda: input_fn_mode("test"),steps=10)
+    results = model.evaluate(input_fn=lambda: input_fn_mode("test"),steps=100)
     
     
 
@@ -317,9 +317,10 @@ def main(unused_argv):
         plt.plot(pred_dict[0]['probabilities'])
         plt.ylabel('some numbers')
         #plt.show()
-        if n % 5 == 1:
+        #if n % 5 == 1:
+            #plt.show()
+        if (a > 22):
             plt.show()
-        if a > 0:
             break
     #print(a)
     #exit()    
