@@ -10,13 +10,12 @@
 
 # TODO
 
+
 * Autoprocess and detect existing files
-* Split train and test datasets here and generate new one if wanted by user/model
-* Make triple input_fn possible for training, testing and predicting
-* Generate acustom estimator and use input_fn from other models and rewrite input pipe
 * Make predictions possible to see if everything is alright with our features
-* Remove unknown or useless feature to shrink datasets and size
-* Generate structure for model savepoints based on estimator settings (e.g. different hidden layer values,...)
+ (this todo seems to be a problem)
+* Remove unknown or useless feature to shrink datasets and size (this is needed in case of a faster prediction testing)
+* Generate structure for model savepoints based on estimator settings (e.g. different hidden layer values,...) (this is not needed just ignore or delete unwanted results)
 
 
 # IDEA
