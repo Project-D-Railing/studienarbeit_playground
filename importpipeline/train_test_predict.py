@@ -220,20 +220,20 @@ def build_estimator(model_dir, model_type):
 
   base_coloumns = build_model_coloumns('testa')
   """Build an estimator appropriate for the given model type."""
-  learning_rate = 0.01
+  learning_rate = 0.02
   if model_type == 'testa':
-    #optimizer = tf.train.FtrlOptimizer(learning_rate=learning_rate, l2_regularization_strength=0.000)
-    #optimizer = tf.train.ProximalAdagradOptimizer(learning_rate=learning_rate,initial_accumulator_value=0.1,l1_regularization_strength=0.0,l2_regularization_strength=0.0,use_locking=False,name='ProximalAdagrad')
-    optimizer = tf.train.AdagradOptimizer(learning_rate=learning_rate)
+    optimizer = tf.train.FtrlOptimizer(learning_rate=learning_rate, l2_regularization_strength=0.000)
+    #optimizer = tf.train.ProximalAdagradOptimizer(learning_rate=learning_rate,initial_accumulator_value=0.1,l1_regularization_strength=0.001,l2_regularization_strength=0.001,use_locking=False,name='ProximalAdagrad')
+    #optimizer = tf.train.AdagradOptimizer(learning_rate=learning_rate)
     return tf.estimator.DNNClassifier(
-        hidden_units=[500,500],
+        hidden_units=[600,600],
         model_dir=model_dir,
         feature_columns=base_coloumns,
-        #optimizer=optimizer,
-        #activation_fn=tf.nn.softmax,
-        #dropout=0.0,
+        optimizer=optimizer,
+        activation_fn=tf.nn.tanh,
+        #dropout=0.1,
         #loss_reduction=tf.losses.Reduction.MEAN,
-        n_classes=24
+        n_classes=288
         )
   elif model_type == 'deep':
     return None
@@ -317,11 +317,11 @@ def main(unused_argv):
         plt.plot(pred_dict[0]['probabilities'])
         plt.ylabel('some numbers')
         #plt.show()
-        #if n % 5 == 1:
+        if n == 10 or n == 12:
             #plt.show()
-        if (a > 22):
-            plt.show()
-            break
+            if (a > 25):
+                #plt.show()
+                break
     #print(a)
     #exit()    
 

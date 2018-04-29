@@ -31,7 +31,7 @@ def timetotimeint(input):
     hhmmss = input
     (h, m, s) = hhmmss.split(':')
     result = int(h) * 60 + int(m)
-    result = math.floor(result/60)
+    result = math.floor(result/5)
     return result
 
     
@@ -112,13 +112,13 @@ MODE = FLAGS.mode
 
 if MODE == "predict":
     # generate prediction files
-    query = ("SELECT id, zugid, zugverkehrstyp, zugtyp, zugowner, zugklasse, zugnummer, zugnummerfull, linie, evanr, arzeitsoll, arzeitist, dpzeitsoll, dpzeitist, gleissoll, gleisist, datum, streckengeplanthash, streckenchangedhash, zugstatus FROM zuege WHERE zugklasse='ICE' LIMIT 50")
+    query = ("SELECT id, zugid, zugverkehrstyp, zugtyp, zugowner, zugklasse, zugnummer, zugnummerfull, linie, evanr, arzeitsoll, arzeitist, dpzeitsoll, dpzeitist, gleissoll, gleisist, datum, streckengeplanthash, streckenchangedhash, zugstatus FROM zuege WHERE zugklasse='ICE' order by id desc LIMIT 50")
     csv_writer_predict = csv.writer(open("./predict/predict.csv", "wt", newline="\n", encoding="utf-8")) # create csv
     csv_writer_predict_result = csv.writer(open("./predict/predict.txt", "wt", newline="\n", encoding="utf-8")) # create txt for proof
 else:
     # train and test files generation
     ## query
-    query = ("SELECT id, zugid, zugverkehrstyp, zugtyp, zugowner, zugklasse, zugnummer, zugnummerfull, linie, evanr, arzeitsoll, arzeitist, dpzeitsoll, dpzeitist, gleissoll, gleisist, datum, streckengeplanthash, streckenchangedhash, zugstatus FROM zuege WHERE zugklasse='ICE' LIMIT 50000")
+    query = ("SELECT id, zugid, zugverkehrstyp, zugtyp, zugowner, zugklasse, zugnummer, zugnummerfull, linie, evanr, arzeitsoll, arzeitist, dpzeitsoll, dpzeitist, gleissoll, gleisist, datum, streckengeplanthash, streckenchangedhash, zugstatus FROM zuege WHERE zugklasse='ICE' order by id desc LIMIT 50,50000")
     csv_writer_train = csv.writer(open("./train/train.csv", "wt", newline="\n", encoding="utf-8")) # create csv
     csv_writer_test = csv.writer(open("./test/test.csv", "wt", newline="\n", encoding="utf-8")) # create csv
 
