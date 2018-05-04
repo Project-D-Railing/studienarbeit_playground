@@ -20,3 +20,12 @@ Wichtige Pakete sind:
 * cuda v8.0 (nicht 9.0 oder 9.1!)
 * cudnn-8.0 v5.1 (nicht die neuste Version)
 * aktueller Treiber (cuda version is insufficient - Fehler beim Ausführen)
+
+
+## Todo
+
+* Erstellung Abbildungen Wie funktionieren layer,etc
+* erstellung tabelle lerndauerr pro datensatz
+* Erstellung Vergleich genauigkeit
+* Erstellung Datensatz pipeline wie funktioniert es (test/train vs predict, labels, etc. input fn
+
