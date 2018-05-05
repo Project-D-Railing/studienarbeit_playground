@@ -28,4 +28,5 @@ Wichtige Pakete sind:
 * erstellung tabelle lerndauerr pro datensatz
 * Erstellung Vergleich genauigkeit
 * Erstellung Datensatz pipeline wie funktioniert es (test/train vs predict, labels, etc. input fn
-
+* Todonotes in der Studienarbeit abarbeiten
+* Fehlene Texte Schreiben besonders ABstract, Fazit, Ausblick, Motivation (umformulieren), Tensorflow und Website fertig schreiben und neu lesen
