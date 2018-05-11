@@ -70,47 +70,47 @@ parser.add_argument(
    
 def build_model_coloumns(model_type):
     if model_type == "testa":
-        #dailytripidparta = tf.feature_column.numeric_column('dailytripidparta')
-        #dailytripidpartb = tf.feature_column.numeric_column('dailytripidpartb')
-        #dailytripidpartc = tf.feature_column.numeric_column('dailytripidpartc')
-        #departuredatestartstation = tf.feature_column.numeric_column('departuredatestartstation')
-        #stopnumber = tf.feature_column.numeric_column('stopnumber')
-        #zugverkehrstyp = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list('zugverkehrstyp', ['D', 'N', 'S', 'F' , 'NULL']))
-        #zugtyp = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list('zugtyp', ['p', 'NULL']))
-        #zugowner = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='zugowner', vocabulary_file='./vocabfiles/zugowner.txt',num_oov_buckets=10))
-        #zugklasse = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='zugklasse', vocabulary_file='./vocabfiles/zugklasse.txt',num_oov_buckets=10))
-        #zugnummer = tf.feature_column.numeric_column('zugnummer')
+        dailytripidparta = tf.feature_column.numeric_column('dailytripidparta')
+        dailytripidpartb = tf.feature_column.numeric_column('dailytripidpartb')
+        dailytripidpartc = tf.feature_column.numeric_column('dailytripidpartc')
+        departuredatestartstation = tf.feature_column.numeric_column('departuredatestartstation')
+        stopnumber = tf.feature_column.numeric_column('stopnumber')
+        zugverkehrstyp = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list('zugverkehrstyp', ['D', 'N', 'S', 'F' , 'NULL']))
+        zugtyp = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list('zugtyp', ['p', 'NULL']))
+        zugowner = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='zugowner', vocabulary_file='./vocabfiles/zugowner.txt',num_oov_buckets=10))
+        zugklasse = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='zugklasse', vocabulary_file='./vocabfiles/zugklasse.txt',num_oov_buckets=10))
+        zugnummer = tf.feature_column.numeric_column('zugnummer')
         #linie = tf.feature_column.numeric_column('linie')
-        #evanr = tf.feature_column.numeric_column('evanr')
+        evanr = tf.feature_column.numeric_column('evanr')
         arzeitsoll = tf.feature_column.numeric_column('arzeitsoll')
-        #arzeitist = tf.feature_column.numeric_column('arzeitist')
-        #dpzeitsoll = tf.feature_column.numeric_column('dpzeitsoll')
+        arzeitist = tf.feature_column.numeric_column('arzeitist')
+        dpzeitsoll = tf.feature_column.numeric_column('dpzeitsoll')
         #dpzeitist = tf.feature_column.numeric_column('dpzeitist')
-        #gleissoll = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='gleissoll', vocabulary_file='./vocabfiles/gleissoll.txt',num_oov_buckets=10))
+        gleissoll = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='gleissoll', vocabulary_file='./vocabfiles/gleissoll.txt',num_oov_buckets=10))
         #gleisist = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_file(key='gleisist', vocabulary_file='./vocabfiles/gleisist.txt',num_oov_buckets=10))
-        #datum = tf.feature_column.numeric_column('datum')
+        datum = tf.feature_column.numeric_column('datum')
         #zugstatus = tf.feature_column.indicator_column(tf.feature_column.categorical_column_with_vocabulary_list('zugstatus', ['n', 'c', 'p']))
         
         coloumns = [
-            #dailytripidparta,
-            #dailytripidpartb,
-            #dailytripidpartc,
-            #departuredatestartstation,
-            #stopnumber,
-            #zugverkehrstyp,
-            #zugtyp,
-            #zugowner,
-            #zugklasse,
-            #zugnummer,
+            dailytripidparta,
+            dailytripidpartb,
+            dailytripidpartc,
+            departuredatestartstation,
+            stopnumber,
+            zugverkehrstyp,
+            zugtyp,
+            zugowner,
+            zugklasse,
+            zugnummer,
             #linie,
-            #evanr,
+            evanr,
             arzeitsoll,
             #arzeitist,
-            #dpzeitsoll,
+            dpzeitsoll,
             #dpzeitist,
-            #gleissoll,
+            gleissoll,
             #gleisist,
-            #datum,
+            datum,
             #zugstatus,    
         ]
     else:
@@ -122,26 +122,26 @@ def parse_csv(value):
     print('Parsing', value)
     columns = tf.decode_csv(value, record_defaults=_CSV_COLUMN_DEFAULTS)
     features = dict(zip(_CSV_COLUMNS, columns))
-    none = features.pop('dailytripidparta')
-    none = features.pop('dailytripidpartb')
-    none = features.pop('dailytripidpartc')
-    none = features.pop('departuredatestartstation')
-    none = features.pop('stopnumber')
-    none = features.pop('zugverkehrstyp')
-    none = features.pop('zugtyp')
-    none = features.pop('zugowner')
-    none = features.pop('zugklasse')
-    none = features.pop('zugnummer')
+    #none = features.pop('dailytripidparta')
+    #none = features.pop('dailytripidpartb')
+    #none = features.pop('dailytripidpartc')
+    #none = features.pop('departuredatestartstation')
+    #none = features.pop('stopnumber')
+    #none = features.pop('zugverkehrstyp')
+    #none = features.pop('zugtyp')
+    #none = features.pop('zugowner')
+    #none = features.pop('zugklasse')
+    #none = features.pop('zugnummer')
     none = features.pop('linie')
-    none = features.pop('evanr')
+    #none = features.pop('evanr')
     #none = features.pop('arzeitsoll')
     labels = features.pop('arzeitist')
 
-    none = features.pop('dpzeitsoll')
+    #none = features.pop('dpzeitsoll')
     none = features.pop('dpzeitist')
-    none = features.pop('gleissoll')
+    #none = features.pop('gleissoll')
     none = features.pop('gleisist')
-    none = features.pop('datum')
+    #none = features.pop('datum')
     none = features.pop('zugstatus')
 
     
@@ -156,65 +156,32 @@ def input_fn_mode(mode):
         filenames = glob(os.path.join('./test', '*.csv'))
     else:
         filenames = glob(os.path.join('./predict', '*.csv'))
-    
     # get all filenames for datasets in this mode, shuffel them
-    random.shuffle(filenames)
-   # filename = filenames[0]
-    print(filenames)
-    #exit()
-        
-   
-    filename = filenames[0]
-    print(filename)
-    
-
-
+    random.shuffle(filenames)       
+    # select one file
+    filename = filenames[0]  
     # Extract lines from input files using the Dataset API.
     dataset = tf.data.TextLineDataset(filename)
     if mode == "predict":
         dataset = dataset.map(parse_csv, num_parallel_calls=5)
-        dataset = dataset.batch(24)
-        #del dataset
-        #dataset = {
-        #    'evanr': [8000041], 
-        #    'arzeitsoll': [1283], 
-        #    'dailytripidparta': [-46743], 
-        #    'dailytripidpartb': [26818], # remove zero at begin of int 
-        #    'dailytripidpartc': [11850992], 
-        #    'datum': [20171203], 
-        #    #'departuredatestartstation' : [1712021913], 
-        #    #'dpzeitsoll' : [21], 
-        #    #'gleissoll' : ["5"], 
-        #    'stopnumber' : [15], 
-        #    #'zugklasse' : ["ICE"], 
-        #    'zugnummer' : [100], 
-        #    #'zugowner' : ["80"], 
-        #    #'zugtyp' : ["p"], 
-        #    #'zugverkehrstyp' : ["F"], 
-        #}
-
-
+        # do only one prediction
+        dataset = dataset.batch(1)
     else:
-        #add shuffle to params later
         shuffle = True
         num_epochs = 4000
         batch_size = 1
-        
+        # shuffle if wanted
         if shuffle:
             dataset = dataset.shuffle(buffer_size=500000)
 
         dataset = dataset.map(parse_csv, num_parallel_calls=5)
-
-        # We call repeat after shuffling, rather than before, to prevent separate
-        # epochs from blending together.
+        # repeat for epoch count
         dataset = dataset.repeat(num_epochs)
+        # generate batches of datasets
         dataset = dataset.batch(batch_size)
- 
-    #print(dataset)
-    #exit()
+
     return dataset
 
-    
     
 def build_estimator(model_dir, model_type):
 
@@ -315,8 +282,8 @@ def main(unused_argv):
         print(pred_dict[0]['probabilities'])
         print(pred_dict[0]['class_ids'][0])
         plt.plot(pred_dict[0]['probabilities'])
-        plt.ylabel('some numbers')
-        #plt.show()
+        plt.ylabel('Wahrscheinlichkeit')
+        plt.show()
         if n == 10 or n == 12:
             #plt.show()
             if (a > 25):
